@@ -15,6 +15,8 @@ before_install:
   # static checkers:
   - pip install pyflakes py3kwarn
 script:
+  - nosetests --with-doc --exe
+  - pip install .
   # Test if we .gitignore test files:
   - TMP=$(tempfile)
   - git ls-files . --exclude-standard --others | tee "$TMP"

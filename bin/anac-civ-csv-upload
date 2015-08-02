@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # encoding: utf-8
 '''Envia dados de uma planilha em formato CSV para sua CIV digital no site da
 ANAC (SACI), localizado em https://sistemas.anac.gov.br/SACI/'''
