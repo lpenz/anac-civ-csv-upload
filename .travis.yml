@@ -9,13 +9,10 @@ python:
 before_install:
   # coveralls:
   - pip install coveralls
-  - SITEPACKAGES=$(pip --version | sed -n 's@.*from \([^ ]\+\) .*@\1@p')
-  - echo 'import coverage; coverage.process_startup()' > $SITEPACKAGES/sitecustomize.py
-  - printf '[run]\nparallel=True\n' > ~/coverage.cfg
   # static checkers:
   - pip install pyflakes py3kwarn
 script:
-  - nosetests --with-doc --exe
+  - nosetests --with-doc --exe --with-coverage
   - pip install .
   # Test if we .gitignore test files:
   - TMP=$(tempfile)
@@ -28,6 +25,4 @@ script:
   - pyflakes .
   - if [ "$TRAVIS_PYTHON_VERSION" = "2.7" ]; then py3kwarn .; fi
 after_success:
-  - find . -name '.coverage*' -exec mv -t . {} +
-  - coverage combine
   - coveralls
