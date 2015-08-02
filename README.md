@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/lpenz/anac-civ-csv-upload.svg?branch=master)](https://travis-ci.org/lpenz/anac-civ-csv-upload)
+[![Coverage Status](https://coveralls.io/repos/lpenz/anac-civ-csv-upload/badge.svg)](https://coveralls.io/r/lpenz/anac-civ-csv-upload)
+
 # anac-civ-csv-upload
 
 Utilitário que envia uma planilha como rascunho para o CIV digital da ANAC.
