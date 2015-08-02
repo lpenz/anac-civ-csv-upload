@@ -1,0 +1,88 @@
+#!/usr/bin/python
+# encoding: utf-8
+'''Envia dados de uma planilha em formato CSV para sua CIV digital no site da
+ANAC (SACI), localizado em https://sistemas.anac.gov.br/SACI/'''
+
+import os
+import sys
+import csv
+import logging
+from datetime import datetime
+from optparse import OptionParser
+
+from anac import Anac
+
+def _log():
+    if not _log.logger:
+        _log.logger = logging.getLogger()
+    return _log.logger
+_log.logger = None
+
+
+def csvparse(csvfile):
+    with open(csvfile) as csvfd:
+        rd = csv.reader(csvfd)
+        f = next(rd)
+        for l in rd:
+            d = {}
+            i = 0
+            for c in l:
+                d[f[i]] = c
+                i += 1
+            yield d
+
+
+def doit(csvfile, dryrun=False):
+    a = Anac(dryrun=dryrun)
+    for d in csvparse(csvfile):
+        _log().info('d %s' % (d['dia']))
+        _log().debug(str(d))
+        form = {}
+        form['txtDataVoo'] = \
+            datetime.strptime(d['dia'], '%Y-%m-%d')\
+                    .strftime('%d/%m/%Y')
+        form['txtMatricula'] = d['matricula']
+        form['txtOrigem'] = d['origem']
+        form['txtDestino'] = d['destino']
+        if d['duplo'] != '':
+            t = int(d['duplo'])
+            form['cmbFuncao'] = ['07']
+        elif d['solo'] != '':
+            t = int(d['solo'])
+            form['cmbFuncao'] = ['06']
+        form['txtDiurno'] = '%02d:%02d' % (int(t / 60), t % 60)
+        form['txtNavegacao'] = form['txtDiurno']
+        # Auto fields:
+        form['CD_HABILITACAO'] = 'PLAN'
+        form['ID_HABILITACAO'] = '237'
+        form['hdhabilitacao'] = 'PRI'
+        a.add(form)
+
+
+def _logging_verbose(option, opt, value, parser):
+    logging.getLogger().setLevel(logging.INFO)
+
+def _logging_debug(option, opt, value, parser):
+    logging.getLogger().setLevel(logging.DEBUG)
+
+
+def main():
+    parser = OptionParser(usage="Usage: %prog <csv file>", description=__doc__)
+    parser.add_option('-n', '--dry-run',
+                      dest='dryrun', action="store_true", default=False,
+                      help='Não enviar dados, apenas mostrar o que seria feito')
+    parser.add_option('-d', '--debug',
+            action="callback", callback=_logging_debug,
+            help='Mostrar mensagens de debug')
+    parser.add_option('-v', '--verbose',
+                      action="callback", callback=_logging_verbose,
+                      help='Mostrar mensagens de informação')
+    (cfg, args) = parser.parse_args()
+    if len(args) != 1:
+        parser.error('Invalid arguments.')
+    prog = os.path.basename(sys.argv[0])
+    logging.basicConfig(format=prog + ': %(message)s')
+    doit(args[0], dryrun=cfg.dryrun)
+
+if __name__ == '__main__':
+    main()
