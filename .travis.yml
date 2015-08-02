@@ -1,11 +1,11 @@
 language: python
 python:
-  #- "2.6"
+  - "2.6"
   - "2.7"
-  #- "3.2"
-  #- "3.3"
-  #- "3.4"
-  #- "nightly"
+  # - "3.2" # mechanize issues
+  # - "3.3" # mechanize issues
+  # - "3.4" # mechanize issues
+  # - "nightly" # mechanize issues
 before_install:
   # coveralls:
   - pip install coveralls
