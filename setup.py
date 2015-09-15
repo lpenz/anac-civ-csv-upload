@@ -9,7 +9,7 @@ config = {
     'url': 'https://github.com/lpenz/anac-civ-csv-upload',
     'author_email': 'lpenz@lpenz.org',
     'version': '0.1',
-    'install_requires': ['nose','mechanize'],
+    'install_requires': ['nose', 'mechanize'],
     'packages': ['anac'],
     'scripts': ['bin/anac-civ-csv-upload'],
     'name': 'anac-csv-upload'

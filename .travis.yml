@@ -10,7 +10,7 @@ before_install:
   # coveralls:
   - pip install coveralls
   # static checkers:
-  - pip install pyflakes py3kwarn
+  - pip install flake8 py3kwarn
 script:
   - nosetests --with-doc --exe --with-coverage
   - pip install .
@@ -22,7 +22,7 @@ script:
   - git ls-files -i --exclude-standard | tee "$TMP"
   - if test -s "$TMP"; then false; else true; fi
   # static checkers:
-  - pyflakes .
+  - flake8 .
   - if [ "$TRAVIS_PYTHON_VERSION" = "2.7" ]; then py3kwarn .; fi
 after_success:
   - coveralls

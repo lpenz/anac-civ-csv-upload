@@ -25,7 +25,8 @@ class Anac(object):
         self.host = 'sistemas.anac.gov.br'
         a = netrc().authenticators(self.host)
         if a is None:
-            _log().error('Usuario e senha para %s não encontrado no ~/.netrc' % self.host)
+            _log().error('Usuario e senha para %s'
+                         'não encontrado no ~/.netrc' % self.host)
         self.br.form['txtLogin'] = a[0]
         self.br.form['txtSenha'] = a[2]
         r = self.br.submit()
@@ -46,6 +47,3 @@ class Anac(object):
         if 'sucesso' in r:
             return
         _log().warn(r)
-
-
-

@@ -10,7 +10,9 @@ import logging
 from datetime import datetime
 from optparse import OptionParser
 
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from anac import Anac
+
 
 def _log():
     if not _log.logger:
@@ -62,21 +64,25 @@ def doit(csvfile, dryrun=False):
 def _logging_verbose(option, opt, value, parser):
     logging.getLogger().setLevel(logging.INFO)
 
+
 def _logging_debug(option, opt, value, parser):
     logging.getLogger().setLevel(logging.DEBUG)
 
 
 def main():
     parser = OptionParser(usage="Usage: %prog <csv file>", description=__doc__)
+    h = u'Não enviar dados, apenas mostrar o que seria feito'
     parser.add_option('-n', '--dry-run',
-                      dest='dryrun', action="store_true", default=False,
-                      help='Não enviar dados, apenas mostrar o que seria feito')
+                      dest='dryrun',
+                      action="store_true",
+                      default=False,
+                      help=h)
     parser.add_option('-d', '--debug',
-            action="callback", callback=_logging_debug,
-            help='Mostrar mensagens de debug')
+                      action="callback", callback=_logging_debug,
+                      help='Mostrar mensagens de debug')
     parser.add_option('-v', '--verbose',
                       action="callback", callback=_logging_verbose,
-                      help='Mostrar mensagens de informação')
+                      help=u'Mostrar mensagens de informação')
     (cfg, args) = parser.parse_args()
     if len(args) != 1:
         parser.error('Invalid arguments.')
