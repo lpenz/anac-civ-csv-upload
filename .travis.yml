@@ -1,6 +1,5 @@
 language: python
 python:
-  - "2.6"
   - "2.7"
   # - "3.2" # mechanize issues
   # - "3.3" # mechanize issues
