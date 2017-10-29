@@ -11,6 +11,8 @@ def _log():
     if not _log.logger:
         _log.logger = logging.getLogger()
     return _log.logger
+
+
 _log.logger = None
 
 
