@@ -9,9 +9,9 @@ jobs:
         - python setup.py install --prefix=_install
     - env: [ ACTION=test ]
       python: 2.7
-      before_install: pip install coveralls
+      before_install: pip install coverage
       script: nosetests --with-doc --exe --with-coverage
-      after_success: coveralls
+      after_success: bash <(curl -s https://codecov.io/bash)
     - env: [ ACTION=omnilint ]
       language: generic
       install: docker pull lpenz/omnilint
