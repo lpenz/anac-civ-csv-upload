@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/lpenz/anac-civ-csv-upload.svg?branch=master)](https://travis-ci.org/lpenz/anac-civ-csv-upload)
-[![codecov](https://codecov.io/gh/lpenz/anac-civ-csv-upload/branch/master/graph/badge.svg)](https://codecov.io/gh/lpenz/anac-civ-csv-upload)
+*This repository has been archived and is no longer maintained*
 
 # anac-civ-csv-upload
 
